@@ -11,6 +11,10 @@ class Tickets extends \_DefaultController {
 		$this->title="Tickets";
 		$this->model="Ticket";
 	}
+	
+	private static function getTypes() {
+		return ["incident" => "Incident", "demande" => "Demande"];
+	}
 
 	public function messages($id){
 		$ticket=DAO::getOne("Ticket", $id[0]);
@@ -34,4 +38,29 @@ class Tickets extends \_DefaultController {
 	}
 
 
+	public function frm($id=NULL){
+		if(Auth::isAuth()) {
+			if(!empty($id) && Auth::isAdmin()) {
+				$ticket = DAO::getOne("Ticket", $id[0]);
+				$statuts = DAO::getAll("Statut");
+				
+				$this-> loadView("ticket/vEdit", array(
+						"ticketTypes" => Tickets::getTypes(),
+						"categories" => $categories,
+						"ticket" => $ticket,
+						"statut" => $statut
+				));
+			}
+			elseif (!empty($id) && !Auth::isAdmin()) {
+				$this-> messageDanger("blablabla");
+			}
+			Else {
+				$this->loadView("ticket/vAdd", Array (
+						"ticketTypes" => Tickets::getTypes(),
+						));
+			}
+		}
+		Else 
+			$this-> messageDanger("Vous devez etre connecter pour acceder a la page !");
+	}
 }
