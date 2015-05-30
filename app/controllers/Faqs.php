@@ -30,7 +30,7 @@ class Faqs extends \_DefaultController {
 			$this->loadView("article/vAdd", array("user"=>$cat, "faq"=>$object, "date"=>$date));
 		}
 		else {
-		echo $this->messageDanger("Vous devez etre un administrateur du site pour acceder a cette apge !");
+		echo $this->messageDanger("Vous devez etre un administrateur du site pour acceder a cette page !");
 	}
 
 }
