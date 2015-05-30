@@ -40,8 +40,9 @@ class Tickets extends \_DefaultController {
 
 	public function frm($id=NULL){
 		if(Auth::isAuth()) {
-			if(!empty($id) && Auth::isAdmin()) {
+			if(!empty($id) && !Auth::isAdmin()) {
 				$ticket = DAO::getOne("Ticket", $id[0]);
+				$categories = DAO::getAll('Categorie');
 				$statuts = DAO::getAll("Statut");
 				
 				$this-> loadView("ticket/vEdit", array(
@@ -51,16 +52,28 @@ class Tickets extends \_DefaultController {
 						"statut" => $statut
 				));
 			}
-			elseif (!empty($id) && !Auth::isAdmin()) {
+			elseif (!empty($id) && Auth::isAdmin()) {
 				$this-> messageDanger("blablabla");
 			}
 			Else {
 				$this->loadView("ticket/vAdd", Array (
 						"ticketTypes" => Tickets::getTypes(),
+						'currentUser' => Auth::getUser(),
 						));
 			}
 		}
 		Else 
 			$this-> messageDanger("Vous devez etre connecter pour acceder a la page !");
 	}
+	
+	Public function add($id=NULL) {
+		if(Auth::isAuth()){
+			if(!empty($_POST['type']) && !empty($_POST['categorie']) && !empty($_POST['titre']) && !empty($_POST['description']))
+				$ticket = new Ticket();
+				
+				$this->messageSuccess('Le ticket a bien etait creer !');
+			}
+			else
+				$this->messageWarning('Veuillez remplir tous les champs !');
+		}
 }
