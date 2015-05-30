@@ -52,9 +52,8 @@ class Tickets extends \_DefaultController {
 						"statut" => $statut
 				));
 			}
-			elseif (!empty($id) && Auth::isAdmin()) {
-				$this-> messageDanger("blablabla");
-			}
+			
+			
 			Else {
 				$this->loadView("ticket/vAdd", Array (
 						"ticketTypes" => Tickets::getTypes(),
