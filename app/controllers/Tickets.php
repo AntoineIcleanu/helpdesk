@@ -42,25 +42,24 @@ class Tickets extends \_DefaultController {
 		if(Auth::isAuth()) {
 			if(!empty($id) && !Auth::isAdmin()) {
 				$ticket = DAO::getOne("Ticket", $id[0]);
-				$categories = DAO::getAll('Categorie');
+				$cat = DAO::getAll('Categorie');
 				$statuts = DAO::getAll("Statut");
 				
 				$this-> loadView("ticket/vEdit", array(
 						"ticketTypes" => Tickets::getTypes(),
-						"categories" => $categories,
+						"categories" => $cat,
 						"ticket" => $ticket,
 						"statut" => $statut
 				));
 			}
 			
 			
-			Else {
 				$this->loadView("ticket/vAdd", Array (
 						"ticketTypes" => Tickets::getTypes(),
 						'currentUser' => Auth::getUser(),
 						));
 			}
-		}
+		
 		Else 
 			$this-> messageDanger("Vous devez etre connecter pour acceder a la page !");
 	}
@@ -80,7 +79,7 @@ class Tickets extends \_DefaultController {
 				DAO::insert($ticket);
 				
 				$this->messageSuccess('Le ticket a bien etait creer !');
-			}
+		}
 			else
 				$this->messageWarning('Veuillez remplir tous les champs !');
 		}
