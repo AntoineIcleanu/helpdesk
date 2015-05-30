@@ -70,6 +70,15 @@ class Tickets extends \_DefaultController {
 		if(Auth::isAuth()){
 			if(!empty($_POST['type']) && !empty($_POST['categorie']) && !empty($_POST['titre']) && !empty($_POST['description']))
 				$ticket = new Ticket();
+				$ticket->setUser(Auth::getUser());
+				$ticket->setStatut(DAO::getOne("Statut", 1));
+				if(in_array($_POST['type'], Tickets::getTypes())) {
+					$ticket->setType($_POST['type']);
+				}
+				$ticket->setCategorie(DAO::getOne('Categorie', $_POST['categorie']));
+				$ticket->setTitre($_POST['titre']);
+				$ticket->setDescription($_POST['description']);
+				DAO::insert($ticket);
 				
 				$this->messageSuccess('Le ticket a bien etait creer !');
 			}
