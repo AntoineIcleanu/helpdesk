@@ -11,6 +11,16 @@ class Tickets extends \_DefaultController {
 		$this->title="Tickets";
 		$this->model="Ticket";
 	}
+	protected function setValuesToObject(&$object) {
+		parent::setValuesToObject($object);
+		if(isset($_POST["idCategorie"])){
+			$cat=DAO::getOne("Categorie", $_POST["idCategorie"]);
+			$object->setCategorie($cat);
+		}
+		$object->setUser(Auth::getUser());
+		$statut=DAO::getOne("Statut", $_POST["Statut"]);
+		$object->setStatut($statut);
+	}
 	
 	private static function getTypes() {
 		return ["incident" => "Incident", "demande" => "Demande"];
@@ -46,6 +56,12 @@ class Tickets extends \_DefaultController {
 			$this->loadView("ticket/vAdd", array("user"=>$cat, "faq"=>$object, "date"=>$date));
 		}
 		else {
-		echo $this->messageDanger("Vous devez etre cnnecter au site pour acceder a cette page !");
+		echo $this->messageDanger("Vous devez &ecirc;tre connecté au site pour acceder a cette page !");
 	}}
 }
+/* (non-PHPdoc)
+ * @see _DefaultController::setValuesToObject()
+ */
+
+
+	
