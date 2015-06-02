@@ -1,62 +1,27 @@
-<div class="container">
-	<div class='well well-lg'>
-		<?php 
-		echo $_SESSION["user"];
-		?>
-		</br>
-		<table class="table">
-			<tr>
-				<td>Mes tickets</td>
-				<td>Nombre</td>
-			</tr>
-			<tr class="info">
-				<td>Nouveau</td>
-				<td><?php 
-					echo count(DAO::getAll("Ticket","idStatut=1"));
-				?></td>
-			</tr>
-			<tr>
-				<td>Attribu&eacute</td>
-				<td><?php 
-					echo count(DAO::getAll("Ticket","idStatut=2"));
-				?></td>
-			</tr>
-			<tr class="info">
-				<td>R&eacutesolu</td>
-				<td><?php 
-					echo count(DAO::getAll("Ticket","idStatut=4"));
-				?></td>
-			</tr>
-			
-		</table>
-	</div>
-	<a class="btn btn-info" href="tickets">Cr&eacuteer un ticket</a>
-	</div>
-	<div class="container well well-lg">
-		<table class="table">
-			<tr>
-				<td colspan="2"><h3>Base de connaissance : Sujets les plus r&eacutecents</h3></td>
-			</tr>
-			<tr class="info">
-				<td><?php $articles=DAO::getAll("Faq", "id * order by date desc");
-						$article=$articles[0];
-						$article->getTitre();
-				?></td>
-				<td><?php 
-					echo count(DAO::getAll("Ticket","idStatut=1"));
-				?></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><?php 
-					echo count(DAO::getAll("Ticket","idStatut=2"));
-				?></td>
-			</tr>
-			<tr class="info">
-				<td></td>
-				<td><?php 
-					echo count(DAO::getAll("Ticket","idStatut=4"));
-				?></td>
-			</tr>
-		</table>
+
+	<div class="container">
+	<div class="well well-lg">
+		<fieldset>
+			<legend>Données</legend>
+			<a class="btn btn-link" href="#">Accueil</a>
+			<a class="btn btn-default" href="users">Utilisateurs</a>
+			<a class="btn btn-primary" href="categories">Catégories</a>
+			<a class="btn btn-info" href="tickets">Tickets</a>
+			<a class="btn btn-success" href="statuts">Statuts</a>
+			<a class="btn btn-warning" href="faqs">Faq</a>
+			<a class="btn btn-danger" href="messages">Messages</a>
+			<a class="btn btn-danger" href="tickets/messages/1">Messages d'un ticket</a>
+			<a class="btn btn-primary" href="defaultc/test">Test</a>
+		</fieldset>
+		<fieldset>
+			<legend>Connexion</legend>
+				<a class="btn btn-default" href="defaultc/asAdmin">Connexion en tant qu'admin</a>
+				<a class="btn btn-default" href="defaultc/asUser">Connexion en tant que user</a>
+				<a class="btn btn-warning" href="defaultc/disconnect">Déconnexion</a>
+		</fieldset>
+		<fieldset>
+			<legend>CkEditor</legend>
+				<a class="btn btn-link" href="defaultc/ckEditorSample">Exemple ckEditor</a>
+		</fieldset>
+		</div>
 	</div>

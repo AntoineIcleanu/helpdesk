@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /**
  * Contrôleur par défaut (défini dans config => documentRoot)
  * @author jcheron
@@ -12,9 +12,21 @@ class DefaultC extends \BaseController {
 	 * @see BaseController::index()
 	 */
 	public function index() {
+		if (Auth::getUser()!=NULL){
+			if (Auth::isAdmin()){
+				$this->loadView("main/vHeader",array("infoUser"=>Auth::getInfoUser()));
+				$this->loadView("main/vDefault");
+				$this->loadView("main/vFooter");				
+			}else{
+				$this->loadView("main/vHeader",array("infoUser"=>Auth::getInfoUser()));
+				$this->loadView("main/vUser");
+				$this->loadView("main/vFooter");
+			}
+		}else{
 		$this->loadView("main/vHeader",array("infoUser"=>Auth::getInfoUser()));
-		$this->loadView("main/vDefault");
+		echo "<div class='alert alert-danger'>Vous n'êtes pas connecté</div>";
 		$this->loadView("main/vFooter");
+		}
 	}
 
 	/**
